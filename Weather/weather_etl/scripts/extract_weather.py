@@ -8,7 +8,6 @@ API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 # Load API Key from .env
 load_dotenv()
-#API_KEY = os.getenv("OPENWEATHER_API_KEY")
 CITY = "Chicago,US"
 URL = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric"
 
