@@ -4,8 +4,6 @@ import json
 import psycopg2
 from dotenv import load_dotenv
 from airflow.models import Variable
-#API_KEY = Variable.get("OPENWEATHER_API_KEY")
-#API_KEY = '476d5bcc6a6163498766a711ab7a6fa1'
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 # Load API Key from .env
