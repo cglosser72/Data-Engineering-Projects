@@ -1,0 +1,41 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: weather_db
+    ports:
+      - "5416:5432"  #  already have 5432 on my local machine
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  airflow:
+    image: apache/airflow:latest
+    container_name: airflow
+    restart: always
+    depends_on:
+      - postgres
+#    environment: 
+#      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/weather_db
+#      - OPENWEATHER_API_KEY=476d5bcc6a6163498766a711ab7a6fa1  # Set API Key here      
+    env_file:  .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./db:/opt/airflow/db
+    command: ["airflow", "standalone"]
+
+
+networks:
+  pgnetwork:
+    driver: bridge
+
+volumes:
+  postgres_data:
